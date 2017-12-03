@@ -1,0 +1,23 @@
+spec:
+  template:
+    spec:
+      containers:
+        - env:
+          - name: spring.profiles.active
+            value: mysql
+          - name: SECRETS_MYSQL_URL
+            valueFrom:
+              secretKeyRef:
+                name: mysql-security
+                key: spring.datasource.url
+          - name: SECRETS_MYSQL_USER
+            valueFrom:
+              secretKeyRef:
+                name: mysql-security
+                key: spring.datasource.username
+          - name: SECRETS_MYSQL_USER_PWD
+            valueFrom:
+              secretKeyRef:
+                name: mysql-security
+                key: spring.datasource.password
+          
