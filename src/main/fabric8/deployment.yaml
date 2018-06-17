@@ -3,21 +3,18 @@ spec:
     spec:
       containers:
         - env:
-          - name: spring.profiles.active
+          - name: spring_jpa_database
             value: mysql
-          - name: SECRETS_MYSQL_URL
+          - name: spring_datasource_url
+            value: jdbc:mysql://mysql/test?useSSL=false
+          - name: spring_datasource_username
             valueFrom:
               secretKeyRef:
-                name: mysql-security
-                key: spring.datasource.url
-          - name: SECRETS_MYSQL_USER
+                name: mysql-secret
+                key: MYSQL_USER
+          - name: spring_datasource_password
             valueFrom:
               secretKeyRef:
-                name: mysql-security
-                key: spring.datasource.username
-          - name: SECRETS_MYSQL_USER_PWD
-            valueFrom:
-              secretKeyRef:
-                name: mysql-security
-                key: spring.datasource.password
+                name: mysql-secret
+                key: MYSQL_PASSWORD
           

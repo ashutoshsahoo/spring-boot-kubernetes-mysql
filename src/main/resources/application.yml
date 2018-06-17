@@ -1,9 +1,0 @@
----
-spring:
-  profiles: mysql
-  jpa: 
-    database: mysql
-  datasource:
-    url: ${SECRETS_MYSQL_URL:jdbc:mysql://localhost:3306/test?useSSL=false}
-    username: ${SECRETS_MYSQL_USER:test}
-    password: ${SECRETS_MYSQL_USER_PWD:test123}
