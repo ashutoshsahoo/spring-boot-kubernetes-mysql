@@ -41,7 +41,7 @@ $ mvn fabric8:build fabric8:resource fabric8:deploy
 
 ```curl
 curl -X GET \
-  http://127.0.0.1:8080/api/pets \
+  http://127.0.0.1:31371/api/pets \
   -H 'Accept: application/json' \
   -H 'Content-Type: application/json'
    
