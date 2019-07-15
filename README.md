@@ -1,7 +1,14 @@
-## Spring-Boot-Kubernetes-MySQL
+## Spring Boot Kubernetes and MySQL
 
 Sample project to use spring boot application with mysql database in kubernetes with fabric8 maven plugin.
 
+### Prerequisite :
+- Minikube
+- Kubernetes command-line tool(kubectl)
+- Java
+- Maven
+
+### Start application:
 
 - Start mysql database
 
@@ -41,7 +48,7 @@ $ mvn fabric8:build fabric8:resource fabric8:deploy
 
 ```curl
 curl -X GET \
-  http://127.0.0.1:8080/api/pets \
+  http://$(minikube ip):31371/api/pets \
   -H 'Accept: application/json' \
   -H 'Content-Type: application/json'
    
