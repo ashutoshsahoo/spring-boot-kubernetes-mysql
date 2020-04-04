@@ -1,9 +1,9 @@
 ## Spring Boot Kubernetes and MySQL
 
-Sample project to use spring boot application with mysql database in kubernetes with fabric8 maven plugin.
+Sample project to test and deploy spring boot application with mysql database in kubernetes using fabric8 maven plugin.
 
 ### Prerequisite :
-- Minikube
+- Docker with kubernetes enabled
 - Kubernetes command-line tool(kubectl)
 - Java
 - Maven
@@ -18,29 +18,12 @@ $ kubectl create -f deployment/mysql-deployment.yaml
 
 ```
 
-- Connect to mysql database
-
-```sh
-$ kubectl run -it --rm --image=mysql:5.7 --restart=Never mysql-client -- mysql -h mysql -ppassword
-```
-- Create table and insert some records
- 
-```sql
-mysql> GRANT ALL PRIVILEGES ON test.* To 'testuser'@'%' IDENTIFIED BY 'test123'; 
-mysql> FLUSH PRIVILEGES;
-
-mysql> use test;
-mysql> CREATE TABLE pet (name VARCHAR(20), owner VARCHAR(20), species VARCHAR(20), sex CHAR(1), birth DATE, death DATE);
-mysql> INSERT INTO pet VALUES ('Puffball','Diane','hamster','f','1999-03-30',NULL);
-
-```
-
 - Build application and deploy in kubernetes
 
 ```sh
 $ mvn clean package
 
-$ mvn fabric8:build fabric8:resource fabric8:deploy
+$ mvn -DskipTests fabric8:build fabric8:resource fabric8:deploy
 
 ```
 
@@ -48,7 +31,7 @@ $ mvn fabric8:build fabric8:resource fabric8:deploy
 
 ```curl
 curl -X GET \
-  http://$(minikube ip):31371/api/pets \
+  http://localhost:31371/api/v1/pets \
   -H 'Accept: application/json' \
   -H 'Content-Type: application/json'
    
