@@ -2,26 +2,15 @@ apiVersion: v1
 kind: Service
 metadata:
   name: mysql
+  labels:
+    app: mysql
 spec:
   #type: NodePort
   ports:
-  - port: 3306
-    #targetPort: 3306
-    #nodePort: 31000
+    - port: 3306
+      #nodePort: 31000
   selector:
     app: mysql
-  clusterIP: None
----
-apiVersion: v1    
-kind: Secret
-metadata:
-  name: mysql-secret
-type: Opaque
-data:
-  MYSQL_ROOT_PASSWORD: cGFzc3dvcmQ= #password
-  MYSQL_DATABASE: dGVzdA== #test
-  MYSQL_USER: dGVzdHVzZXI= #testuser
-  MYSQL_PASSWORD: dGVzdDEyMw== #test123
 ---
 apiVersion: v1
 kind: PersistentVolumeClaim
@@ -38,6 +27,8 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: mysql
+  labels:
+    app: mysql
 spec:
   selector:
     matchLabels:
@@ -50,53 +41,60 @@ spec:
         app: mysql
     spec:
       containers:
-      - image: mysql:8
-        name: mysql
-        env:
-          # Use secret in real usage
-        - name: MYSQL_ROOT_PASSWORD
-          valueFrom:
-              secretKeyRef:
-                name: mysql-secret
-                key: MYSQL_ROOT_PASSWORD
-        - name: MYSQL_DATABASE
-          valueFrom:
-              secretKeyRef:
-                name: mysql-secret
-                key: MYSQL_DATABASE
-        - name: MYSQL_USER
-          valueFrom:
-              secretKeyRef:
-                name: mysql-secret
-                key: MYSQL_USER
-        - name: MYSQL_PASSWORD
-          valueFrom:
-              secretKeyRef:
-                name: mysql-secret
-                key: MYSQL_PASSWORD          
-        ports:
-        - containerPort: 3306
+        - image: mysql:8
           name: mysql
-        volumeMounts:
-        - name: mysql-persistent-storage
-          mountPath: /var/lib/mysql
-        - name: initdb
-          mountPath: /docker-entrypoint-initdb.d
+          resources:
+            limits:
+              memory: "1Gi"
+              cpu: "1"
+            requests:
+              memory: "500Mi"
+              cpu: "500m"
+          env:
+            - name: MYSQL_DATABASE
+              valueFrom:
+                configMapKeyRef:
+                  name: mysql-config
+                  key: MYSQL_DATABASE
+            - name: MYSQL_ROOT_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: mysql-secret
+                  key: MYSQL_ROOT_PASSWORD
+            - name: MYSQL_USER
+              valueFrom:
+                secretKeyRef:
+                  name: mysql-secret
+                  key: MYSQL_USER
+            - name: MYSQL_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: mysql-secret
+                  key: MYSQL_PASSWORD
+          ports:
+            - containerPort: 3306
+              name: mysql
+          volumeMounts:
+            - name: mysql-persistent-storage
+              mountPath: /var/lib/mysql
+            - name: initdb
+              mountPath: /docker-entrypoint-initdb.d
       volumes:
-      - name: mysql-persistent-storage
-        persistentVolumeClaim:
-          claimName: mysql-pv-claim
-      - name: initdb
-        configMap:
-          name: mysql-initdb-config
+        - name: mysql-persistent-storage
+          persistentVolumeClaim:
+            claimName: mysql-pv-claim
+        - name: initdb
+          configMap:
+            name: mysql-config
 ---
 apiVersion: v1
 kind: ConfigMap
 metadata:
-  name: mysql-initdb-config
+  name: mysql-config
 data:
+  MYSQL_DATABASE: petdb
+  MYSQL_DATABASE_URL: jdbc:mysql://mysql/petdb
   initdb.sql: |
-    use test;
+    use petdb;
     CREATE TABLE pet (name VARCHAR(20), owner VARCHAR(20), species VARCHAR(20), sex CHAR(1), birth DATE, death DATE);
     INSERT INTO pet VALUES ('Puffball','Diane','hamster','f','1999-03-30',NULL);
-

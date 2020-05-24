@@ -3,5 +3,5 @@ kind: Service
 spec:
   type: NodePort
   ports:
-  - port: 8080
-    nodePort: 31371
+    - port: 8080
+      nodePort: 31371
