@@ -15,7 +15,7 @@ pipeline {
 
         stage ('Build Application') {
             steps {
-                sh 'mvn -Dmaven.test.failure.ignore=true install' 
+                sh 'mvn clean install'
             }
             post {
                 success {
@@ -26,13 +26,13 @@ pipeline {
 		
 		stage ('Build Docker Image') {
             steps {
-                sh 'mvn -Dfabric8.mode=openshift fabric8:resource fabric8:build' 
+                sh 'mvn k8s:build k8s:resource'
             }
         }
 		
-		stage ('Openshift Deploy') {
+		stage ('Kubernetes Deploy') {
             steps {
-                sh 'mvn -DskipTests fabric8:deploy'
+                sh 'mvn k8s:deploy'
             }
         }
     }
