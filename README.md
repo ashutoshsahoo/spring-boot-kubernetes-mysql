@@ -1,6 +1,6 @@
 # Spring Boot Kubernetes and MySQL
 
-Sample project to test and deploy spring boot application with mysql database in kubernetes using fabric8 maven plugin.
+Sample project to test and deploy spring boot application with mysql database in kubernetes using JKube maven plugin.
 
 ## Prerequisite
 
@@ -22,7 +22,7 @@ kubectl create -f deployment/mysql-deployment.yaml
 
 ```sh
 mvn clean package
-mvn -DskipTests fabric8:build fabric8:resource fabric8:deploy
+mvn k8s:build k8s:resource k8s:apply
 ```
 
 - Test application :
@@ -52,7 +52,13 @@ Response should be :
 ### Delete deployment, service, secret and pvc
 
 ```sh
-mvn fabric8:undeploy
+mvn k8s:undeploy
 kubectl delete -f deployment/mysql-deployment.yaml
 kubectl delete -f deployment/secrets.yaml
 ```
+### Reference
+
+- [Spring Boot](https://spring.io/projects/spring-boot)
+- [Eclipse JKube](https://github.com/eclipse/jkube)
+- [OpenJDK Docker](https://hub.docker.com/_/openjdk)
+- [MySQL Docker](https://hub.docker.com/_/mysql)

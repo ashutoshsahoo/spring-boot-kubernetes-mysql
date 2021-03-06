@@ -1,22 +1,21 @@
 package com.ashu.demo;
 
-import static org.assertj.core.api.Assertions.assertThat;
-
+import com.ashu.demo.web.PetController;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
-import com.ashu.demo.web.PetController;
+import static org.assertj.core.api.Assertions.assertThat;
 
 @SpringBootTest
-public class ApplicationTests {
+class ApplicationTests {
 
-	@Autowired
-	private PetController controller;
+    @Autowired
+    private PetController controller;
 
-	@Test
-	public void contextLoads() {
-		assertThat(controller).isNotNull();
-	}
+    @Test
+    void contextLoads() {
+        assertThat(controller).isNotNull();
+    }
 
 }
