@@ -13,7 +13,9 @@ import java.util.List;
 @RequiredArgsConstructor
 @Slf4j
 @RestController
-@RequestMapping(value = "/pets", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+@RequestMapping(value = "/pets",
+        consumes = MediaType.APPLICATION_JSON_VALUE,
+        produces = MediaType.APPLICATION_JSON_VALUE)
 public class PetController {
 
     private final PetRepository petRepository;
@@ -27,7 +29,9 @@ public class PetController {
     @GetMapping
     public List<Pet> view() {
         log.info("View method called");
-        return petRepository.findAll();
+        List<Pet> pets = petRepository.findAll();
+        log.info("Pet list :{}", pets);
+        return pets;
     }
 
 }
