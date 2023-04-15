@@ -4,24 +4,22 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
-    <groupId>com.ashu</groupId>
-    <artifactId>spring-boot-kubernetes-mysql</artifactId>
-    <version>4.2.0</version>
-    <packaging>jar</packaging>
-
-    <name>Spring-Boot-Kubernetes-MySQL</name>
-    <description>Demo project for Spring Boot,Kubernetes, MySQL with PVC</description>
-
     <parent>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-starter-parent</artifactId>
-        <version>2.7.1</version>
+        <version>3.0.5</version>
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
 
+    <groupId>com.ashu.practice</groupId>
+    <artifactId>spring-boot-kubernetes-mysql</artifactId>
+    <version>5.0.0</version>
+    <name>spring-boot-kubernetes-mysql</name>
+    <description>Practice project for Spring Boot,Kubernetes, MySQL with PVC</description>
+
     <properties>
         <java.version>17</java.version>
-        <jkube.version>1.8.0</jkube.version>
+        <jkube.version>1.12.0</jkube.version>
     </properties>
 
     <dependencies>
@@ -34,8 +32,8 @@
             <artifactId>spring-boot-starter-data-jpa</artifactId>
         </dependency>
         <dependency>
-            <groupId>mysql</groupId>
-            <artifactId>mysql-connector-java</artifactId>
+            <groupId>com.mysql</groupId>
+            <artifactId>mysql-connector-j</artifactId>
             <scope>runtime</scope>
         </dependency>
         <dependency>
@@ -60,6 +58,14 @@
             <plugin>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
+                <configuration>
+                    <excludes>
+                        <exclude>
+                            <groupId>org.projectlombok</groupId>
+                            <artifactId>lombok</artifactId>
+                        </exclude>
+                    </excludes>
+                </configuration>
             </plugin>
             <plugin>
                 <groupId>org.eclipse.jkube</groupId>

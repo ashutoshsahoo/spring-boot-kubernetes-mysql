@@ -1,6 +1,6 @@
-package com.ashu.demo;
+package com.ashu.practice;
 
-import com.ashu.demo.web.PetController;
+import com.ashu.practice.web.PetController;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
