@@ -1,0 +1,60 @@
+plugins {
+	id 'java'
+	id 'org.springframework.boot' version '3.0.5'
+	id 'io.spring.dependency-management' version '1.1.0'
+	id 'idea'
+	id 'com.palantir.docker' version '0.35.0'
+}
+
+group 'com.ashu.practice'
+version '5.0.0'
+
+sourceCompatibility = '17'
+
+repositories {
+	mavenCentral()
+}
+
+configurations {
+	compileOnly {
+		extendsFrom annotationProcessor
+	}
+}
+
+dependencies {
+	implementation 'org.springframework.boot:spring-boot-starter-actuator'
+	implementation 'org.springframework.boot:spring-boot-starter-web'
+	implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
+	runtimeOnly 'com.mysql:mysql-connector-j'
+	compileOnly 'org.projectlombok:lombok'
+	annotationProcessor 'org.springframework.boot:spring-boot-configuration-processor'
+	annotationProcessor 'org.projectlombok:lombok'
+	testImplementation 'org.springframework.boot:spring-boot-starter-test'
+	testImplementation 'com.h2database:h2'
+}
+
+tasks.named('test') {
+	useJUnitPlatform()
+}
+
+
+jar {
+	enabled = false
+}
+
+docker {
+	dependsOn bootJar
+	name "ashutoshsahoo/${project.name}:latest"
+	buildArgs([JAR_FILE: "${project.name}-${project.version}.jar", VERSION: "${project.version}"])
+	files bootJar
+//    tag 'latest', "${project.parent.version}"
+//    noCache true
+}
+
+
+idea {
+	module {
+		downloadJavadoc = true
+		downloadSources = true
+	}
+}
