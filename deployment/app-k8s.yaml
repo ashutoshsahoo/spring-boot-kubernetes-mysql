@@ -19,6 +19,12 @@ items:
       type: NodePort
       selector:
         app: spring-boot-kubernetes-mysql
+  - apiVersion: v1
+    kind: ServiceAccount
+    metadata:
+      name: spring-boot-kubernetes-mysql
+      labels:
+        account: spring-boot-kubernetes-mysql
   - apiVersion: apps/v1
     kind: Deployment
     metadata:
@@ -36,6 +42,7 @@ items:
             app: spring-boot-kubernetes-mysql
             version: 5.0.0
         spec:
+          serviceAccountName: spring-boot-kubernetes-mysql
           containers:
             - name: spring-boot-kubernetes-mysql
               image: ashutoshsahoo/spring-boot-kubernetes-mysql:5.0.0
@@ -69,3 +76,13 @@ items:
                     secretKeyRef:
                       name: mysql-secret
                       key: MYSQL_PASSWORD
+              securityContext:
+                # runAsUser: 1000
+                # readOnlyRootFilesystem: true
+                allowPrivilegeEscalation: false
+              livenessProbe:
+                httpGet:
+                  path: /api/v1/actuator/health
+                  port: 8080
+                initialDelaySeconds: 15
+                periodSeconds: 5
