@@ -45,7 +45,7 @@ items:
           serviceAccountName: spring-boot-kubernetes-mysql
           containers:
             - name: spring-boot-kubernetes-mysql
-              image: ashutoshsahoo/spring-boot-kubernetes-mysql:5.0.0
+              image: astrolabe31/spring-boot-kubernetes-mysql:5.0.0
               imagePullPolicy: IfNotPresent
               resources:
                 limits:
