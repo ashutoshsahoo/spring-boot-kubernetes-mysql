@@ -2,6 +2,10 @@ server:
   servlet:
     context-path: /api/v1
 spring:
+  application:
+    name: spring-boot-kubernetes-mysql
+  main:
+    banner-mode: off
   jpa:
     open-in-view: false
 #  datasource:

@@ -6,8 +6,8 @@ Sample project to test and deploy spring boot application with mysql database in
 
 - Docker with kubernetes enabled
 - Kubernetes command-line tool(kubectl)
-- JDK 17 LTS
-- Gradle
+- JDK 21 LTS
+- Gradle 8
 
 ## Start application
 
