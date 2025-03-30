@@ -1,7 +1,7 @@
 FROM openjdk:21-slim AS builder
 WORKDIR /usr/local/temp
 ARG JAR_FILE=build/libs/*.jar
-ADD ${JAR_FILE} application.jar
+COPY ${JAR_FILE} application.jar
 RUN java -Djarmode=tools -jar application.jar extract --layers --launcher
 
 FROM openjdk:21-slim
