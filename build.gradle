@@ -2,11 +2,13 @@ plugins {
     id 'java'
     id 'org.springframework.boot' version '3.5.0'
     id 'io.spring.dependency-management' version '1.1.7'
+    id "org.sonarqube" version "$sonarVersion"
+    id "jacoco"
     id 'idea'
 }
 
 group 'com.ashu.practice'
-version '6.2.0'
+version "$appVersion"
 
 java {
     toolchain {
@@ -39,8 +41,16 @@ dependencies {
 
 tasks.named('test') {
     useJUnitPlatform()
+    finalizedBy jacocoTestReport
 }
 
+jacocoTestReport {
+    dependsOn test
+    reports {
+        xml.required = true
+        html.required = true
+    }
+}
 
 jar {
     enabled = false

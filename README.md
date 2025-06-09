@@ -61,6 +61,15 @@ kubectl delete -f deployment/mysql-deployment.yaml
 kubectl delete -f deployment/secrets.yaml
 
 ```
+
+### Code Analysis
+
+Set the Sonarqube URL and token in [gradle.properties](./gradle.properties) file.
+
+```shell
+ gradle clean build sonar --stacktrace
+```
+
 ### Reference
 
 - [Spring Boot](https://spring.io/projects/spring-boot)
