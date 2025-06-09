@@ -7,8 +7,8 @@ plugins {
     id 'idea'
 }
 
-group 'com.ashu.practice'
-version "$appVersion"
+group = 'com.ashu.practice'
+version = "$appVersion"
 
 java {
     toolchain {
