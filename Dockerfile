@@ -10,6 +10,12 @@ LABEL version=${VERSION}
 LABEL maintainer="Ashutosh Sahoo"
 LABEL description="spring-boot-kubernetes-mysql"
 
+# Install curl and clean up to reduce image size
+RUN apt-get update && \
+    apt-get install -y curl && \
+    apt-get clean && \
+    rm -rf /var/lib/apt/lists/*
+
 WORKDIR /usr/local/app
 RUN useradd --user-group --system --create-home --no-log-init app
 USER app

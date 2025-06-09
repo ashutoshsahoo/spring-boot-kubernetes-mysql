@@ -1,13 +1,12 @@
 plugins {
     id 'java'
-    id 'org.springframework.boot' version '3.4.4'
+    id 'org.springframework.boot' version '3.5.0'
     id 'io.spring.dependency-management' version '1.1.7'
     id 'idea'
-    id 'com.palantir.docker' version '0.36.0'
 }
 
 group 'com.ashu.practice'
-version '6.1.0'
+version '6.2.0'
 
 java {
     toolchain {
@@ -46,16 +45,6 @@ tasks.named('test') {
 jar {
     enabled = false
 }
-
-docker {
-    dependsOn bootJar
-    name "ashutoshsahoo/${project.name}:latest"
-    buildArgs([JAR_FILE: "${project.name}-${project.version}.jar", VERSION: "${project.version}"])
-    files bootJar
-//    tag 'latest', "${project.parent.version}"
-//    noCache true
-}
-
 
 idea {
     module {

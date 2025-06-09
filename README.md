@@ -22,7 +22,8 @@ kubectl apply -f deployment/mysql-deployment.yaml
 - Build application and deploy in kubernetes
 
 ```sh
-gradle clean dockerTag
+gradle clean build -i --stacktrace
+docker build -t ashutoshsahoo/spring-boot-kubernetes-mysql:6.2.0 . 
 kubectl apply -f deployment/app-k8s.yaml
 
 ```

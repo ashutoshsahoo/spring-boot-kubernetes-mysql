@@ -8,7 +8,9 @@ spring:
     banner-mode: off
   jpa:
     open-in-view: false
+    show-sql: true
 #  datasource:
-#    url: jdbc:mysql://localhost:31000/petdb
-#    username: root
-#    password: password
+#    url: jdbc:mysql://localhost:3306/app_db
+#    username: db_user
+#    password: db_user_pass
+#    driver-class-name: com.mysql.cj.jdbc.Driver

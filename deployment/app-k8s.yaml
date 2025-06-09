@@ -7,7 +7,7 @@ items:
     metadata:
       labels:
         app: spring-boot-kubernetes-mysql
-        version: 6.1.0
+        version: 6.2.0
       name: spring-boot-kubernetes-mysql
     spec:
       ports:
@@ -30,7 +30,7 @@ items:
     metadata:
       labels:
         app: spring-boot-kubernetes-mysql
-        version: 6.1.0
+        version: 6.2.0
       name: spring-boot-kubernetes-mysql
     spec:
       selector:
@@ -40,12 +40,12 @@ items:
         metadata:
           labels:
             app: spring-boot-kubernetes-mysql
-            version: 6.1.0
+            version: 6.2.0
         spec:
           serviceAccountName: spring-boot-kubernetes-mysql
           containers:
             - name: spring-boot-kubernetes-mysql
-              image: ashutoshsahoo/spring-boot-kubernetes-mysql:6.1.0
+              image: ashutoshsahoo/spring-boot-kubernetes-mysql:6.2.0
               imagePullPolicy: IfNotPresent
               resources:
                 limits:
@@ -80,9 +80,19 @@ items:
                 # runAsUser: 1000
                 # readOnlyRootFilesystem: true
                 allowPrivilegeEscalation: false
+              readinessProbe:
+                httpGet:
+                  path:  /api/v1/actuator/health/readiness
+                  port: 8080
+                initialDelaySeconds: 10
+                periodSeconds: 10
+                timeoutSeconds: 2
+                failureThreshold: 3
               livenessProbe:
                 httpGet:
-                  path: /api/v1/actuator/health
+                  path:  /api/v1/actuator/health/liveness
                   port: 8080
                 initialDelaySeconds: 15
-                periodSeconds: 5
+                periodSeconds: 15
+                timeoutSeconds: 2
+                failureThreshold: 5
